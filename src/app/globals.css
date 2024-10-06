@@ -25,3 +25,36 @@ body {
     text-wrap: balance;
   }
 }
+
+.playground-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh; /* Ensures the container takes full viewport height */
+  margin-top: 5rem;
+}
+
+.new-game-button {
+  background-color: #154ade;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px; /* 调整圆角以匹配 */
+  transition: background-color 0.3s ease; /* 平滑过渡 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加阴影 */
+  margin-left: 5rem;
+}
+
+.new-game-button:hover {
+  background-color: #030e2c;
+}
+
+.button-container {
+  display: flex;
+}

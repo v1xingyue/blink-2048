@@ -1,5 +1,5 @@
-import { Game } from "./game";
+import { PlayGround } from "./playground";
 
 export default function Home() {
-  return <Game />;
+  return <PlayGround />;
 }
