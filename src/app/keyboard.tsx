@@ -18,9 +18,3 @@ export const Keyborad = () => {
     </>
   );
 };
-
-// 添加处理 New Game 按钮点击的函数
-const handleNewGame = () => {
-  console.log("New Game started");
-  // 在这里添加启动新游戏的逻辑
-};
