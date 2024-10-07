@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useAtom } from "jotai";
+import { addressAtom } from "../atoms/gameAtoms";
 
 const GRID_SIZE = 4;
 
@@ -8,6 +10,7 @@ export const Game = () => {
   const [score, setScore] = useState<number>(0);
   const [steps, setSteps] = useState<number>(0);
   const [gameOver, setGameOver] = useState<boolean>(false);
+  const [address] = useAtom(addressAtom);
   const gameContainerRef = useRef<HTMLDivElement>(null);
 
   const initializeGrid = useCallback((): number[][] => {
@@ -25,19 +28,19 @@ export const Game = () => {
 
   useEffect(() => {
     if (gameContainerRef.current) {
-      gameContainerRef.current.focus(); // Ensure focus is set after component mounts
+      gameContainerRef.current.focus();
     }
   }, [gameContainerRef]);
 
   const move = useCallback(
     (direction: "up" | "down" | "left" | "right") => {
-      const newGrid = JSON.parse(JSON.stringify(grid)); // Deep copy to avoid reference issues
+      const newGrid = JSON.parse(JSON.stringify(grid));
       let newScore = score;
       let moved = false;
 
       if (direction === "up" || direction === "down") {
         for (let col = 0; col < GRID_SIZE; col++) {
-          const column = newGrid.map((row: number[]) => row[col]); // Specify row type
+          const column = newGrid.map((row: number[]) => row[col]);
           if (direction === "down") column.reverse();
           const [mergedColumn, columnScore] = merge(column);
           newScore += columnScore;
@@ -165,6 +168,11 @@ export const Game = () => {
     }
   }
 
+  const formatAddress = (address: string | null) => {
+    if (!address) return "offline";
+    return `${address.slice(0, 4)}...${address.slice(-6)}`;
+  };
+
   return (
     <div
       ref={gameContainerRef}
@@ -184,6 +192,7 @@ export const Game = () => {
         style={{
           display: "flex",
           justifyContent: "space-between",
+          alignItems: "center",
           width: "80vw",
           marginBottom: "20px",
           maxWidth: `${GRID_SIZE * 150}px`,
@@ -199,6 +208,16 @@ export const Game = () => {
           }}
         >
           Score: {score}
+        </div>
+        <div
+          style={{
+            margin: "0 20px",
+            fontSize: "24px",
+            fontWeight: "bold",
+            color: "#333",
+          }}
+        >
+          Address: {formatAddress(address)}
         </div>
         <div
           style={{
@@ -262,11 +281,11 @@ export const Game = () => {
             onClick={restartGame}
             style={{
               marginTop: "20px",
-              width: "50%", // Set width to 50% of the game panel
-              padding: "20px 0", // Adjust padding for larger button
-              fontSize: "28px", // Keep font size for better visibility
+              width: "50%",
+              padding: "20px 0",
+              fontSize: "28px",
               fontWeight: "bold",
-              backgroundColor: "#e67e22", // Corrected background color
+              backgroundColor: "#e67e22",
               border: "none",
               borderRadius: "5px",
               cursor: "pointer",
