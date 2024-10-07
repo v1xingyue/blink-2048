@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 2048 Game on Solana using Blink
 
-## Getting Started
+This is a simple implementation of the classic 2048 game built using Solana's Blink framework. The game is integrated with Solana blockchain, allowing player interactions and high scores to be saved on-chain. This project was created for the Solana Hackathon.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Classic 2048 gameplay: Use arrow keys or swipe gestures to move the tiles on the board.
+2. Solana Integration: High scores and game state are saved on the Solana blockchain using Blink.
+3. Responsive design: Play on desktop or mobile devices.
+4. Lightweight and fast: Built with performance in mind using Solana's Blink framework.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Game Logic with Blink
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+In this 2048 game, Blink is used to manage interactions with the blockchain:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Game State Storage: Each time a player reaches a new high score, Blink triggers a transaction to store the game state and the score on the Solana blockchain.
+2. High Score Leaderboard: Blink fetches the top scores from the blockchain, making the leaderboard decentralized and tamper-proof.
+3. Secure Transactions: When a player ends a game, Blink ensures that the transaction containing the score and game state is securely signed and submitted using the player's Solana wallet.
 
-## Learn More
+## Blink Workflow
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. The game calls a Solana Action via a GET request to fetch metadata about the game and the available actions (e.g., submitting a score).
+2. The player completes the game and triggers a POST request to send their game score, generating a signable transaction.
+3. The transaction is signed using the player's wallet and sent to the Solana blockchain for confirmation.
+4. High scores are fetched from the blockchain using a GET request, displaying the current leaderboard.
